@@ -136,6 +136,7 @@ class ExchangeRateHostBackend(BackendBase):
                 })
                 for date_str, rates_by_symbol in response["rates"].items():
                     current_date = _parse_date(date_str)
-                    for symbol, rate in rates_by_symbol.items():
-                        series[symbol][current_date] = rate
+                    for foreign_currency, rate in rates_by_symbol.items():
+                        currency_pair = CurrencyPair(domestic_currency, foreign_currency)
+                        series[currency_pair][current_date] = rate
         return series

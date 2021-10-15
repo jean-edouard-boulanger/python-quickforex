@@ -7,7 +7,7 @@ README = (HERE / "README.md").read_text()
 
 setuptools.setup(
     name='quickforex',
-    version="0.0.2",
+    version="0.0.3",
     description="Simple foreign exchange rates retrieval API",
     long_description=README,
     long_description_content_type="text/markdown",
