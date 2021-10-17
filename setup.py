@@ -6,7 +6,7 @@ README = (HERE / "README.md").read_text()
 
 
 setuptools.setup(
-    name='quickforex',
+    name="quickforex",
     version="0.0.3",
     description="Simple foreign exchange rates retrieval API",
     long_description=README,
@@ -15,14 +15,14 @@ setuptools.setup(
     url="https://github.com/jean-edouard-boulanger/quickforex",
     author_email="jean.edouard.boulanger@gmail.com",
     license="MIT",
-    packages=["quickforex", "quickforex.backends"],
+    packages=["quickforex", "quickforex.backend"],
     python_requires=">=3.8",
     classifiers=[
         "Development Status :: 4 - Beta",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent"
+        "Operating System :: OS Independent",
     ],
     install_requires=[
         "requests",
-    ]
+    ],
 )
