@@ -8,7 +8,6 @@ from quickforex.utils import (
     parse_date_range_kwargs,
     parse_currency_pair_args,
     currency_pair_of_tuple,
-    currency_pair_of_str,
     filter_kwargs,
 )
 
@@ -25,16 +24,6 @@ def test_currency_pair_of_tuple():
 def test_currency_pair_of_tuple_bad_inputs(bad_input):
     with pytest.raises((ValueError, TypeError)):
         currency_pair_of_tuple(bad_input)
-
-
-def test_currency_pair_of_str():
-    assert currency_pair_of_str("EUR/USD") == CurrencyPair("EUR", "USD")
-
-
-@pytest.mark.parametrize("bad_input", ["", "EUR", "EUR/", "EUR/USD/GBP"])
-def test_currency_pair_of_str_bad_inputs(bad_input: str):
-    with pytest.raises((ValueError, TypeError)):
-        currency_pair_of_str(bad_input)
 
 
 @pytest.mark.parametrize(

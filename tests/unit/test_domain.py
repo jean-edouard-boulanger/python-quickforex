@@ -41,6 +41,26 @@ def test_reverse_currency_pair():
 
 
 @pytest.mark.parametrize(
+    "pair_str,expected",
+    [
+        ("EURUSD", CurrencyPair("EUR", "USD")),
+        ("JPY/GBP", CurrencyPair("JPY", "GBP")),
+        ("BTC/USDT", CurrencyPair("BTC", "USDT")),
+    ],
+)
+def test_parse_currency_pair(pair_str: str, expected: CurrencyPair):
+    assert CurrencyPair.parse(pair_str) == expected
+
+
+@pytest.mark.parametrize(
+    "bad_pair_str", ["", "EUR", "EURUS", "EUR/USD/BTC", "GBP/", "EUR//USD"]
+)
+def test_parse_currency_pair_bad_inputs(bad_pair_str):
+    with pytest.raises(ValueError):
+        CurrencyPair.parse(bad_pair_str)
+
+
+@pytest.mark.parametrize(
     "start_date,end_date",
     [(yesterday, today), (today, today + timedelta(days=365)), (today, today)],
 )

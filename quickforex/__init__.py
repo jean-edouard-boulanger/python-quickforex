@@ -9,6 +9,9 @@ from quickforex.api import (
 )
 
 
+__version__ = "0.0.4"
+
+
 __all__ = [
     "Api",
     "get_latest_rates",
