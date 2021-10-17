@@ -23,4 +23,6 @@ jobs:
       - name: Install Python dependencies
         run: python3.9 -m pip install -r dev.requirements.txt
       - name: Run unit tests
-        run: python -m pytest tests/unit
+        run: python -m pytest -vv tests/unit
+      - name: Run system tests
+        run: python -m pytest -vv tests/system
