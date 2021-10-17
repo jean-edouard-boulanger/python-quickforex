@@ -100,8 +100,8 @@ class ExchangeRateHostBackend(BackendBase):
             base_currency = response["base"]
             if base_currency != domestic_currency:
                 raise QuickForexError(
-                    f"server responded with unexpected base currency '{domestic_currency}'"
-                    f" (expected '{base_currency}')"
+                    f"server responded with unexpected base currency '{base_currency}'"
+                    f" (expected '{domestic_currency}')"
                 )
             for foreign_currency, rate in response["rates"].items():
                 currency_pair = CurrencyPair(base_currency, foreign_currency)

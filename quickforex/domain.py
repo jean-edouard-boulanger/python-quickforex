@@ -8,6 +8,10 @@ SymbolType = str
 
 @dataclass(frozen=True)
 class CurrencyPair:
+    HUMAN_READABLE_STR_FORMAT = (
+        "'<domestic>/<foreign>' [EUR/USD] or '<domestic:3><foreign:3>': [JPYUSD]"
+    )
+
     domestic: SymbolType
     foreign: SymbolType
 
@@ -29,6 +33,19 @@ class CurrencyPair:
             raise ValueError(
                 f"invalid currency pair {self}: domestic and foreign currency must both be defined"
             )
+
+    @staticmethod
+    def parse(pair_str: str) -> "CurrencyPair":
+        parse_error = f"{pair_str} is not a valid currency pair. Expected {CurrencyPair.HUMAN_READABLE_STR_FORMAT}."
+        if "/" in pair_str:
+            items = pair_str.split("/")
+            if len(items) != 2:
+                raise ValueError(parse_error)
+            return CurrencyPair(items[0], items[1])
+        else:
+            if len(pair_str) != 6:
+                raise ValueError(parse_error)
+            return CurrencyPair(pair_str[0:3], pair_str[3:6])
 
 
 @dataclass(frozen=True)

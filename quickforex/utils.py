@@ -1,16 +1,7 @@
-from typing import Union, Generator, Iterable, Any
-from datetime import date, timedelta
+from typing import Union, Iterable, Any
+from datetime import date
 
 from quickforex.domain import DateRange, CurrencyPairType, CurrencyPair
-
-
-def currency_pair_of_str(ccy_pair_str: str) -> CurrencyPair:
-    ccy_pair_items = ccy_pair_str.split("/")
-    if len(ccy_pair_items) != 2:
-        raise ValueError(
-            f"'{ccy_pair_str}' string is not a valid currency pair (expected: '<domestic>/<foreign>')"
-        )
-    return CurrencyPair(*ccy_pair_items)
 
 
 def currency_pair_of_tuple(ccy_pair: tuple[str, str]) -> CurrencyPair:
@@ -28,7 +19,7 @@ def make_currency_pair(ccy_pair: CurrencyPairType) -> CurrencyPair:
     if isinstance(ccy_pair, CurrencyPair):
         return ccy_pair
     if isinstance(ccy_pair, str):
-        return currency_pair_of_str(ccy_pair)
+        return CurrencyPair.parse(ccy_pair)
     if isinstance(ccy_pair, tuple):
         return currency_pair_of_tuple(ccy_pair)
     raise ValueError(
