@@ -1,14 +1,14 @@
 from typing import Any, Optional, Iterable
+from dataclasses import dataclass
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 from decimal import Decimal
-import json
 
-import requests
-
+from quickforex.providers.factory import registered_provider
+from quickforex.providers.base import ProviderBase
+from quickforex.http_requester import HttpRequesterBase
 from quickforex.errors import QuickForexError
 from quickforex.logger import get_module_logger
-from quickforex.backend.base import BackendBase
 from quickforex.domain import CurrencyPair, SymbolType, DateRange
 
 
@@ -49,37 +49,34 @@ def _iter_date_range_chunks(date_range: DateRange, interval_days: int):
         current_date = next_date + timedelta(days=1)
 
 
-class Requester(object):
+class Requester(HttpRequesterBase):
     def __init__(self, api_url: str):
-        self._api_url = api_url
+        super().__init__(api_url)
 
-    @staticmethod
-    def _handle_response(response: requests.Response) -> Any:
-        response.raise_for_status()
-        response_payload = response.json()
-        logger.debug(f"received response {json.dumps(response_payload)}")
+    def response_check_hook(self, response_payload: Any) -> None:
         if not response_payload["success"]:
             raise QuickForexError(
                 f"received error response from exchangerate.host: {response_payload}"
             )
-        return response_payload
-
-    def get(self, endpoint: str, params: Optional[dict[str, str]] = None) -> Any:
-        resource_url = f"{self._api_url}/{endpoint}"
-        logger.debug(
-            f"sending request to {resource_url} with params={json.dumps(params)}"
-        )
-        response = requests.get(resource_url, params=params)
-        return self._handle_response(response)
 
 
-class ExchangeRateHostBackend(BackendBase):
-    """Forex Api backed by exchangerate.host"""
+@dataclass
+class Settings:
+    decimal_places: int = 6
+    source: Optional[str] = None
+
+
+@registered_provider
+class ExchangeRateHostProvider(ProviderBase):
+    """Provider backed by exchangerate.host"""
 
     identifier = "exchangerate.host"
 
-    def __init__(self, requester: Optional[Requester] = None):
+    def __init__(
+        self, requester: Optional[Requester] = None, settings: Optional[Settings] = None
+    ):
         self._requester = requester or Requester(API_URL)
+        self._settings = settings or Settings()
 
     def _get_rates(
         self, currency_pairs: Iterable[CurrencyPair], as_of: Optional[date] = None

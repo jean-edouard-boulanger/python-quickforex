@@ -4,10 +4,10 @@ from decimal import Decimal
 import pytest
 
 from quickforex.domain import CurrencyPair, DateRange
-from quickforex.backend.exchangerate_host import ExchangeRateHostBackend
+from quickforex.providers.exchangerate_host import ExchangeRateHostProvider
 
 
-BackendType = ExchangeRateHostBackend
+BackendType = ExchangeRateHostProvider
 HISTORICAL_DATE = date(year=2020, month=2, day=5)
 HISTORICAL_RANGE = DateRange(
     date(year=2019, month=1, day=1), date(year=2021, month=1, day=1)
