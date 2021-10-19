@@ -3,16 +3,12 @@ on:
   push:
     branches:
       - master
-    paths:
-      - "**.py"
   pull_request:
     branches:
       - master
-    paths:
-      - "**.py"
 
 jobs:
-  unit-tests:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - name: Check out finbot source
@@ -23,31 +19,16 @@ jobs:
       - name: Install Python dependencies
         run: python3.9 -m pip install -r dev.requirements.txt
       - name: Run unit tests
-        run: python -m pytest -vv tests/unit
-  integration-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out finbot source
-        uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Install Python dependencies
-        run: python3.9 -m pip install -r dev.requirements.txt
+        run: python -m pytest --cov=./ --cov-report=xml -vv tests/unit/
       - name: Run integration tests
-        run: python -m pytest -vv tests/integration
-  system-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out finbot source
-        uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Install Python dependencies
-        run: python3.9 -m pip install -r dev.requirements.txt
+        run: python -m pytest --cov=./ --cov-report=xml --cov-append -vv tests/integration/
       - name: Run system tests
-        run: python -m pytest -vv tests/system
+        run: python -m pytest --cov=./ --cov-report=xml --cov-append -vv tests/system/
+      - name: Publish coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
   packaging:
     runs-on: ubuntu-latest
     steps:
