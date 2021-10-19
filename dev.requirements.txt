@@ -1,6 +1,7 @@
 -r requirements.txt
-pytest
 black
-wheel
-twine
 deepdiff
+pytest
+pytest-cov
+twine
+wheel
