@@ -1,0 +1,41 @@
+name: Release
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  test-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out finbot source
+        uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install Python dependencies
+        run: python3.9 -m pip install -r dev.requirements.txt
+      - name: Release package to test PyPi
+        env:
+          PYPI_REPO: testpypi
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.QUICKFOREX_TEST_PYPI }}
+        run:
+          ./tools/release.sh
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out finbot source
+        uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install Python dependencies
+        run: python3.9 -m pip install -r dev.requirements.txt
+      - name: Release package to PyPi
+        env:
+          PYPI_REPO: testpypi
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.QUICKFOREX_PYPI }}
+        run:
+          ./tools/release.sh
