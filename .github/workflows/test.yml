@@ -25,7 +25,6 @@ jobs:
       - name: Run system tests
         run: python -m pytest --cov=./ --cov-report=xml --cov-append -vv tests/system/
       - name: Publish coverage to Codecov
-        #if: github.ref == 'refs/heads/master'
         uses: codecov/codecov-action@v2
         with:
           fail_ci_if_error: true
