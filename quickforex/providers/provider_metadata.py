@@ -84,7 +84,7 @@ class ProviderMetadata:
     def from_provider_type(provider_type: Type[ProviderBase]) -> "ProviderMetadata":
         return ProviderMetadata(
             identifier=provider_type.identifier,
-            description=provider_type.__doc__,
+            description=provider_type.__doc__.strip(),
             settings_type=_infer_provider_settings_type(provider_type),
         )
 

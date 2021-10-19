@@ -22,7 +22,7 @@ def assert_no_diff(expected: dict[Any, Any], outcome: dict[Any, Any]):
             ["--format", "json:pretty", "providers"],
             {
                 "exchangerate.host": {
-                    "description": " Provider backed by exchangerate.host ",
+                    "description": "Provider backed by exchangerate.host",
                     "identifier": "exchangerate.host",
                     "settings_required": False,
                     "settings_schema": [
