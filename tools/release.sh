@@ -29,10 +29,10 @@ done
 repository=
 if [[ "${release_mode}" == "prod" ]]
 then
-  repository=testpypi
+  repository=pypi
 elif [[ "${release_mode}" == "test" ]]
 then
-  repository=pypi
+  repository=testpypi
 else
   echo "missing or invalid release mode (${release_mode})"
   exit 1
