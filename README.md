@@ -41,7 +41,7 @@ from quickforex import CurrencyPair
 import quickforex
 
 quickforex.get_historical_rate("BTC/USD", as_of=date(year=2021, month=1, day=1))  # -> Decimal(29388.20)
-quickforex.get_historical_rates("EUR/USD", "EUR/GBP", as_of==date(year=2021, month=1, day=1))  # -> {CurrencyPair("EUR", "USD"): Decimal(1.21), CurrencyPair("EUR", "GBP"): Decimal(0.89)}
+quickforex.get_historical_rates("EUR/USD", "EUR/GBP", as_of=date(year=2021, month=1, day=1))  # -> {CurrencyPair("EUR", "USD"): Decimal(1.21), CurrencyPair("EUR", "GBP"): Decimal(0.89)}
 ```
 
 #### Get the rates for one or more currency pairs between two historical dates
