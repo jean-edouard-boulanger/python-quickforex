@@ -1,5 +1,8 @@
-from typing import Union, Iterable, Any
+from typing import Union, Iterable, Any, Type
 from datetime import date
+import dataclasses
+import typing
+import json
 
 from quickforex.domain import DateRange, CurrencyPairType, CurrencyPair
 
@@ -85,3 +88,35 @@ def parse_date_range_kwargs(**kwargs: Union[DateRange, date]) -> DateRange:
         start_date=date_range_kwargs[start_date_arg],
         end_date=date_range_kwargs[end_date_arg],
     )
+
+
+def pretty_dump(data: Any) -> str:
+    return json.dumps(data, indent=4)
+
+
+def is_optional_type(t: Type) -> bool:
+    return typing.get_origin(t) is Union and type(None) in typing.get_args(t)
+
+
+def extract_optional_type(t: Type) -> Type:
+    assert is_optional_type(t)
+    return typing.get_args(t)[0]
+
+
+def dataclass_field_has_default(field: dataclasses.Field) -> bool:
+    return (
+        field.default != dataclasses.MISSING
+        or field.default_factory != dataclasses.MISSING
+    )
+
+
+def is_dataclass_field_required(field: dataclasses.Field) -> bool:
+    return not dataclass_field_has_default(field)
+
+
+def get_dataclass_field_default_value(field: dataclasses.Field) -> Any:
+    if field.default != dataclasses.MISSING:
+        return field.default
+    if field.default_factory != dataclasses.MISSING:
+        return field.default_factory()
+    raise ValueError(f"dataclass field {field.name} does not have a default value")

@@ -1,3 +1,10 @@
+from quickforex.providers import (
+    ProviderBase,
+    ProviderMetadata,
+    SettingFieldDescription,
+    ExchangeRateHostProvider,
+)
+from quickforex.errors import QuickForexError
 from quickforex.domain import CurrencyPair, DateRange
 from quickforex.api import (
     Api,
@@ -6,6 +13,10 @@ from quickforex.api import (
     get_historical_rates,
     get_historical_rate,
     get_rates_time_series,
+    get_default_provider_type,
+    get_installed_provider,
+    install_provider,
+    install_provider_with_id,
 )
 
 
@@ -19,6 +30,15 @@ __all__ = [
     "get_historical_rates",
     "get_historical_rate",
     "get_rates_time_series",
+    "get_default_provider_type",
+    "get_installed_provider",
+    "install_provider",
+    "install_provider_with_id",
     "CurrencyPair",
     "DateRange",
+    "ProviderBase",
+    "ProviderMetadata",
+    "SettingFieldDescription",
+    "ExchangeRateHostProvider",
+    "QuickForexError",
 ]
