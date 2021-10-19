@@ -18,10 +18,14 @@ jobs:
           python-version: 3.9
       - name: Install Python dependencies
         run: python3.9 -m pip install -r dev.requirements.txt
-      - name: Run tests
-        run: python -m pytest --cov=./ --cov-report=xml -vv tests/
+      - name: Run unit tests
+        run: python -m pytest --cov=./ --cov-report=xml -vv tests/unit/
+      - name: Run integration tests
+        run: python -m pytest --cov=./ --cov-report=xml --cov-append -vv tests/integration/
+      - name: Run system tests
+        run: python -m pytest --cov=./ --cov-report=xml --cov-append -vv tests/system/
       - name: Publish coverage to Codecov
-        if: github.ref == 'refs/heads/master'
+        #if: github.ref == 'refs/heads/master'
         uses: codecov/codecov-action@v2
         with:
           fail_ci_if_error: true
