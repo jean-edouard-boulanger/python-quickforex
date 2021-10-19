@@ -35,7 +35,7 @@ jobs:
         run: python3.9 -m pip install -r dev.requirements.txt
       - name: Release package to PyPi
         env:
-          PYPI_REPO: testpypi
+          PYPI_REPO: pypi
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.QUICKFOREX_PYPI }}
         run:
