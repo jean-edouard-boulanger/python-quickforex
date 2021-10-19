@@ -3,13 +3,9 @@ on:
   push:
     branches:
       - master
-    paths:
-      - "**.py"
   pull_request:
     branches:
       - master
-    paths:
-      - "**.py"
 
 jobs:
   tests:
@@ -25,11 +21,11 @@ jobs:
       - name: Run tests
         run: python -m pytest --cov=./ --cov-report=xml -vv tests/
       - name: Publish coverage to Codecov
-        if: github.ref == 'refs/heads/develop'
+        #if: github.ref == 'refs/heads/develop'
         uses: codecov/codecov-action@v2
         with:
           fail_ci_if_error: true
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          token: ${{ secrets.CODECOV_TOKEN }}
   packaging:
     runs-on: ubuntu-latest
     steps:
