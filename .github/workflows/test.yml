@@ -48,3 +48,15 @@ jobs:
         run: python3.9 -m pip install -r dev.requirements.txt
       - name: Run system tests
         run: python -m pytest -vv tests/system
+  packaging:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out finbot source
+        uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install Python dependencies
+        run: python3.9 -m pip install -r dev.requirements.txt
+      - name: Create package
+        run: ./tools/package.sh

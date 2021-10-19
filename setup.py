@@ -32,7 +32,7 @@ setuptools.setup(
     url="https://github.com/jean-edouard-boulanger/quickforex",
     author_email="jean.edouard.boulanger@gmail.com",
     license="MIT",
-    packages=["quickforex", "quickforex.backend"],
+    packages=["quickforex", "quickforex.providers"],
     entry_points={"console_scripts": ["quickforex=quickforex.command_line:main"]},
     python_requires=">=3.8",
     classifiers=[
