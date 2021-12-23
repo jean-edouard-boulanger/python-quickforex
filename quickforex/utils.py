@@ -35,7 +35,6 @@ def parse_currency_pairs_args(
 ) -> set[CurrencyPair]:
     currency_pairs: set[CurrencyPair] = set()
     for item in currency_pairs_args:
-        print(type(item))
         if isinstance(item, (CurrencyPair, str, tuple)):
             currency_pairs.add(make_currency_pair(item))
         elif isinstance(item, Iterable):
