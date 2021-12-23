@@ -5,6 +5,13 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 PYPI_REPO=${PYPI_REPO:-testpypi}
 
+if [[ "${TWINE_PASSWORD}" == ":prompt" ]]
+then
+  echo -n "Twine password: "
+  read -s TWINE_PASSWORD
+  echo
+fi
+
 if [[ -z "${TWINE_USERNAME}" ]] || [[ -z "${TWINE_PASSWORD}" ]]
 then
   echo "error: TWINE_USERNAME or TWINE_PASSWORD env variables are missing, aborting"
